@@ -1,1 +1,13 @@
-test confirmed
+
+yc iam key create \
+  --service-account-id ajejv85ta5888rtiqp59 \
+  --folder-name gradework \
+  --output key.json
+
+
+yc config set service-account-key ./terraform/key.json
+yc config set cloud-id b1go55i0ebp2f8n7n676
+yc config set folder-id b1gb6je7n4ra58oqggdl
+
+export YC_TOKEN=$(yc iam create-token)
+export YC_FOLDER_ID=$(yc config get folder-id)

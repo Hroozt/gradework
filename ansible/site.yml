@@ -1,0 +1,27 @@
+---
+- name: nginx an letsencrypt 
+  hosts: nginx
+  roles:
+    - { role: nginx-letsencrypt }
+    - { role: nodeexporter }
+- name: mysql cluster
+  hosts: database
+  roles:
+    - { role: databases }
+    - { role: nodeexporter }
+- name: application
+  hosts: application
+  roles:
+    - { role: application }
+    - { role: gitlab-runner}
+    - { role: nodeexporter }
+- name: Gitlab
+  hosts: gitlab
+  roles:
+    - { role: gitlab-server }
+    - { role: nodeexporter }
+- name: monitoring
+  hosts: mon
+  roles:
+    - { role: monitoring }
+    - { role: nodeexporter }

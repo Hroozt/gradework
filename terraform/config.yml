@@ -1,0 +1,8 @@
+users:
+  - name: hroozt
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDOXZlq40yWf7KSm0thGAb0FtpUDD13oaGrie+31FJtclt5xOCqXwAF+1Y0zhSBIMK8/4OPWwRIDIuxvYb0r9zlBuMLjHTbxpgc2r5M5x736LckpSVguBUCBeKxS1P6K92wVLpjz7dC4pXnASH8YpuWcgNillbngveBlCEcRWVqbW3ASYdXv/mHXVukepOOdGaHKnsvW7lcZuW84WYNETKdZZgbM+kBzmeHw4ekGS8uval08Uk2u1bwu124Unn2/MYsS6FtbRa3Hun6RBr8p8BJsLPSrSG00iPp4l8aOTnXGJUvKOS6aE3dqatqtV8t7Qy0eRWNSHBl6Vxoc2p39ocSgSygsxkTzISbl/Yqpq/LMQREUhVe+lu2E20CjLZbdwFh8Kii8vEZXK5WmnqAjWp8f7qC9VZO77hiv2IlT1fYNDxvvSNRK1D55xW8jexMUGPOCkKQEgGT9YlWpoqTUvKni4YCKrz4LbksdpgKTJWm+BkIoTNeDhbHmtSkOpaGIUNjaDv1ChiOKemm19Fn03e7fNoXX1vxK0Eho9bBpD/iD6arSO5BOqAu6ZaSmUdULc9SigrQHp+/aru5UYgmZRplgRyQsA3fxCwUtZbmyRjvweyPg8+PckmmaFESovLxPukJK7cMjj4gYxYQyso0lr7b7ncjeBG1s72PoKrNtKn8LQ== hroozt@mail.ru
+ 

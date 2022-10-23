@@ -4,8 +4,8 @@ terraform {
     bucket     = "hrooztbucket"
     region     = "ru-central1"
     key        = "network/terraform.tfstate"
-    access_key = "YCAJEXIbKdpLPPUIE5PSCqjMA"
-    secret_key = "YCP4RJxgmPCdd1WamPHD7yhuMkjsuug4FV20yy4Q"
+    access_key = "YCAJEL0c4C0uQ2ATpY2r8aEdM"
+    secret_key = "YCMllE2hcT4LnZ8R4OpKI9TJpwd1hX8Sniu6oGf0"
     skip_region_validation      = true
     skip_credentials_validation = true
   }
