@@ -1,23 +1,40 @@
 ---
-# tasks file for install-gitlab-server
-- name: install docker packeges
+- name: Install dependencies for gitlab
   become: true
-  ansible.builtin.apt:
-    name: "{{ item }}"
-    state: latest
-    update_cache: yes
-  loop: "{{ gitlab_packages }}"
-- name: run docker image Gitlab
+  apt: name={{item}} state=present
+  with_items:
+    - postfix
+    - gnupg2
+
+- name: Update apt-get repo and cache
   become: true
-  community.docker.docker_container:
-    name: gitlab
-    hostname: gitlab
-    image: gitlab/gitlab-ce:latest
-    volumes:
-      - /srv/gitlab/config:/etc/gitlab
-      - /srv/gitlab/logs:/var/log/gitlab
-      - /srv/gitlab/data:/var/opt/gitlab
-    ports:
-      - "1022:22"
-      - "80:80"
-      - "4567:4567"
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+- name: Download gitlab-ce.deb
+  become: true
+  get_url:
+    url: https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_15.4.2-ce.0_amd64.deb/download.deb
+    dest: /tmp/gitlab-ce.deb
+    mode: 0770
+
+- name: Install gitlab
+  become: true
+  command: dpkg -i gitlab-ce.deb
+  args:
+    chdir: "/tmp/"
+
+- name: Install dependencies
+  become: true
+  shell: sudo apt-get -f install
+
+- name: Place gitlab.rb config file
+  become: true
+  template:
+    src: gitlab.rb.j2
+    dest: /etc/gitlab/gitlab.rb
+    owner: root
+    mode: '0600'
+
+- name: Reconfigure gitlab
+  become: true
+  command: /usr/bin/gitlab-ctl reconfigure

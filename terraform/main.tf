@@ -136,7 +136,7 @@ resource "yandex_compute_instance" "gitlab" {
 
   boot_disk {
     initialize_params {
-      image_id = "${yandex_compute_image.default-image.id}"
+      image_id = "fd8autg36kchufhej85b"
       size = 15
     }
   }
@@ -178,4 +178,28 @@ resource "yandex_compute_instance" "mon" {
     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
   
+}
+
+resource "yandex_compute_instance" "runner" {
+  name        = "runner"
+  hostname = "runner"
+
+  resources {
+    cores  = 4
+    memory = 4
+  }
+  boot_disk {
+    initialize_params {
+      image_id    = "fd8autg36kchufhej85b"
+      size        = 15
+    }
+  }
+  network_interface {
+    subnet_id = yandex_vpc_subnet.first_subnet.id
+    nat       = false
+  }
+  metadata = {
+    user-data = "${file("config.txt")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  } 
 }

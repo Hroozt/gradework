@@ -13,12 +13,16 @@
   hosts: application
   roles:
     - { role: application }
-    - { role: gitlab-runner}
     - { role: nodeexporter }
 - name: Gitlab
   hosts: gitlab
   roles:
     - { role: gitlab-server }
+    - { role: nodeexporter }
+- name: Runner
+  hosts: runner
+  roles:
+    - { role: gitlab-runner }
     - { role: nodeexporter }
 - name: monitoring
   hosts: mon

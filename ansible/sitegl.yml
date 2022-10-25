@@ -1,6 +1,6 @@
 ---
-- name: monitoring
-  hosts: mon
+- name: Runner
+  hosts: runner
   roles:
-    - { role: monitoring }
+    - { role: gitlab-runner }
     - { role: nodeexporter }

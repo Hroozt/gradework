@@ -1,18 +1,24 @@
 ---
-# tasks file for install-gitlab-runner
-- name: Install gitlab runner           # Установка gitlab-runner для автоматиского деплоя обновлений в репозитория
+- name: Download and run script
   become: true
-  ansible.builtin.apt:   
-    deb: "{{ gitlab_runner_url }}"
-- name: add gitlab-runner to sudo       # Добавление пользователя gitlab-runner в группу sudo
+  shell: sudo curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+
+- name: Install runner
   become: true
-  ansible.builtin.user:
-    name: gitlab-runner
-    groups: "sudo"
-    append: yes  
-- name: sudo without password for gitlab runner   # Разрешить пользователю gitlab-runner запуск sudo без ввода пароля 
+  shell: sudo apt-get install gitlab-runner
+
+- name: Set SUDOERS for gitlab-runner
   become: true
-  copy:
-    content: 'gitlab-runner ALL=(ALL) NOPASSWD: ALL'
-    dest: /etc/sudoers.d/gitlab_runner_nopasswd
-    mode: 0440
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    insertafter: "^root*"
+    line: "gitlab-runner ALL=(ALL:ALL) ALL"
+
+- name: Set SUDOERS for gitlab-runner (NO PASS)
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    line: "gitlab-runner ALL=(ALL) NOPASSWD: ALL"
+
+#- name: Set
+#  command: sudo gitlab-runner register -n --url http://gitlab --registration-token @UBF^yfv8ej3p --executor shell

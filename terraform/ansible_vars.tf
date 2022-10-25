@@ -14,6 +14,7 @@ gitlab_ip: ${yandex_compute_instance.gitlab.network_interface.0.ip_address}
 application_server_ip: ${yandex_compute_instance.application.network_interface.0.ip_address}
 mon_ip: ${yandex_compute_instance.mon.network_interface.0.ip_address}
 nginx_ip: ${yandex_compute_instance.reverse-proxy.network_interface.0.ip_address}
+runner_ip: ${yandex_compute_instance.runner.network_interface.0.ip_address}
     EOF
   filename        = "../ansible/group_vars/all.yml"
   file_permission = "0644"
@@ -55,6 +56,12 @@ all:
           ansible_host: ${yandex_compute_instance.gitlab.network_interface.0.ip_address}
           ansible_user: ${var.os_username}
           ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ${var.os_username}@${yandex_compute_instance.reverse-proxy.network_interface[0].nat_ip_address}"
+    gitlab:
+      hosts:
+        ${yandex_compute_instance.runner.hostname}:
+          ansible_host: ${yandex_compute_instance.runner.network_interface.0.ip_address}
+          ansible_user: ${var.os_username}
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ${var.os_username}@${yandex_compute_instance.reverse-proxy.network_interface[0].nat_ip_address}"          
     mon:
       hosts:
         ${yandex_compute_instance.mon.hostname}:

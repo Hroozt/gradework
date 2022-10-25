@@ -1,13 +1,21 @@
-
+# Генерация токена для сервис аккаунта
 yc iam key create \
   --service-account-id ajejv85ta5888rtiqp59 \
   --folder-name gradework \
   --output key.json
 
 
+# настройка окрйжения YC CLI
 yc config set service-account-key ./terraform/key.json
 yc config set cloud-id b1go55i0ebp2f8n7n676
 yc config set folder-id b1gb6je7n4ra58oqggdl
 
+#обновление токенов для Яндекса
 export YC_TOKEN=$(yc iam create-token)
 export YC_FOLDER_ID=$(yc config get folder-id)
+
+#СБрос пароля root для Gitlab-ce docker-container
+docker exec -it gitlab gitlab-rake "gitlab:password:reset[root]"
+
+#Крутой дашборд для ГРафаны
+Откройте Dashboards -> Manage -> Import и введите идентификатор доски 1860:

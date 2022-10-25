@@ -1,5 +1,5 @@
 ---
-# tasks nginx-letsencrypt
+# Установка пакета пакетов
 - name: Install Packages
   become: true
   ansible.builtin.apt:
@@ -7,10 +7,20 @@
     state: latest
     update_cache: yes
   loop: "{{ packages }}"
-- name: run letsencrypt
-  become: true
-  shell: "letsencrypt certonly --standalone -m {{ acme_email }} --agree-tos -d {{ domain_name }} -d alertmanager.{{ domain_name }} -d prometheus.{{ domain_name }} -d grafana.{{ domain_name }} -d gitlab.{{ domain_name }}"
 
+# Тормозим Нжинкс
+- name: Restart Nginx 0
+  become: true
+  service:
+    name: nginx
+    state: stopped
+
+# Получаем сертификаты
+#- name: run letsencrypt
+#  become: true
+#  shell: "letsencrypt certonly --standalone -m {{ acme_email }} --agree-tos -d {{ domain_name }} -d alertmanager.{{ domain_name }} -d prometheus.{{ domain_name }} -d grafana.{{ domain_name }} -d gitlab.{{ domain_name }}"
+
+#КОнфигурируем конфиги
 - name: copy default nginx config
   become: true
   template:

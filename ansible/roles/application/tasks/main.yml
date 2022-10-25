@@ -45,6 +45,7 @@
   service:
     name: nginx
     state: restarted
+    
 - name: replace wordpress config  #Загрузка конфига wordpress
   become: true
   ansible.builtin.template:

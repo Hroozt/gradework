@@ -1,3 +1,25 @@
 ---
-# defaults file for install-gitlab-server
-gitlab_domain_name: _not
+gitlab_email_from: 'hroozt@mail.ru'
+gitlab_email_display_name: 'Gitlab hroozt.xyz'
+gitlab_email_enabled: 'true'
+gitlab_support_email: 'gitlab@hroozt.xyz'
+
+##
+# Gitlab general stuff
+gitlab_ssh_host: "{{ gitlab_ip }}"
+
+##
+# Gitlab primary NGINX
+gitlab_nginx_external_url: 'http://gitlab.hroozt.xyz'
+gitlab_nginx_ssl_enable: false
+gitlab_nginx_redirect_http_to_https: 'false'
+gitlab_nginx_ssl_certificate: '/etc/letsencrypt/live/gitlab.example.com/fullchain.pem'
+gitlab_nginx_ssl_certificate_key: '/etc/letsencrypt/live/gitlab.example.com/privkey.pem'
+gitlab_nginx_custom_server_config: 'location ^~ /.well-known {\n alias /var/www/letsencrypt/.well-known;\n}\n'
+
+##
+# Gitlab registry NGINX
+gitlab_registry_nginx_external_url: 'http://gitlab.hroozt.xyz'
+gitlab_registry_nginx_ssl_enable: false
+gitlab_registry_nginx_custom_server_config: 'location ^~ /.well-known {\n alias /var/www/letsencrypt/.well-known;\n}\n'
+
