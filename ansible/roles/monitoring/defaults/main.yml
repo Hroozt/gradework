@@ -62,9 +62,10 @@ prometheus_config_flags_extra: {}
 prometheus_config_file: 'prometheus.yml.j2'
 
 nodeexporter_hosts:
-  - "10.0.0.8:9100"
-  - "10.0.0.10:9100"
-  - "10.0.0.28:9100"
-  - "10.0.0.254:9100"
-  - "10.0.0.20:9100"
-  - "10.0.0.7:9100"
+  - "{{ mysql_master_ip }}:9100"
+  - "{{ mysql_slave_ip }}:9100"
+  - "{{ mysql_host }}:9100"
+  - "{{ gitlab_ip }}:9100"
+  - "{{ application_server_ip }}:9100"
+  - "{{ mon_ip }}:9100"
+  - "{{ nginx_ip }}:9100"

@@ -1,0 +1,6 @@
+---
+- name: monitoring
+  hosts: mon
+  roles:
+    - { role: monitoring }
+    - { role: nodeexporter }

@@ -10,8 +10,8 @@ server {
   listen 443 ssl;
   server_name {{ item.hostname }};
 
-  ssl_certificate     /etc/letsencrypt/archive/{{ domain_name }}/cert1.pem;
-  ssl_certificate_key /etc/letsencrypt/archive/{{ domain_name }}/privkey1.pem;
+  ssl_certificate     /etc/letsencrypt/archive/hroozt.xyz/cert1.pem;
+  ssl_certificate_key /etc/letsencrypt/archive/hroozt.xyz/privkey1.pem;
   ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
   ssl_ciphers         HIGH:!aNULL:!MD5;
 

@@ -1,5 +1,14 @@
 ---
-# vars file for intall-nginx-letsencrypt
+# variables nginx-letsencrypt
+acme_email: hroozt@mail.ru
+domain_name: hroozt.xyz
+www_root: /var/www/html
 packages:
   - "nginx"
   - "letsencrypt"
+subdomains:
+  - {hostname: "{{ domain_name }}", url: "{{application_server_ip}}", port: 80}
+  - {hostname: "grafana.{{ domain_name }}",url: "{{ mon_ip }}", port: 3000}
+  - {hostname: "gitlab.{{ domain_name }}", url: "{{gitlab_ip}}", port: 80}
+  - {hostname: "alertmanager.{{ domain_name }}", url: "{{ mon_ip }}", port: 9093}
+  - {hostname: "prometheus.{{ domain_name }}", url: "{{ mon_ip }}", port: 9090}

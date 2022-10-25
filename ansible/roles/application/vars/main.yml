@@ -1,6 +1,12 @@
 ---
-# vars file for install-wordpress
-wp_packages:          # Пакеты, необходимые для установки
+wp_archive_name: wordpress-6.0.1.tar.gz                     #Версия Wordpress
+wp_get_url: "https://wordpress.org/{{ wp_archive_name }}"   #URL
+wp_root_dir: "/var/www/html"    #Корень сайта
+mysql_wp_database: wordpress #Имя бд
+mysql_wp_user: wordpress #User
+mysql_wp_password: wordpress #Password
+#mysql_host: "{{ mysql_host }}"
+wp_packages:          #"Пакет с пакетами"
   - "nginx"
   - "php7.4-fpm"
   - "php7.4-common"
@@ -14,3 +20,4 @@ wp_packages:          # Пакеты, необходимые для устано
   - "php7.4-xml"
   - "php7.4-cli"
   - "php7.4-zip" 
+  

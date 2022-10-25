@@ -1,43 +1,60 @@
 ---
-# tasks file for install-mysql
-- name: get facts         # запись фактов о хостах в переменные для их использования
+# Таски для установки и конфигурирования скуля
+
+#Присваиваем переменные
+- name: get facts 
   ansible.builtin.set_fact:
     ip: "{{ ansible_facts.all_ipv4_addresses[0] }}"
-- name: install mysql server  # установка сервера mySql
+
+#Установка скуля
+- name: install mysql server
   become: true
   ansible.builtin.apt:
     name: mysql-server
     state: latest
     update_cache: yes
-- name: copy config     # Копирование конфигурационных файлов
+
+#Замена конфиг файлов
+- name: copy config
   become: true
   template:
     src: "{{ cluster_role }}/mysqld.cnf"
     dest: /etc/mysql/mysql.conf.d/
     force: true
-- name: Restart MySql  # Перезапуск mysql
+
+#Перезапуск скуля
+- name: Restart MySql
   become: true
   service:
     name: mysql
     state: restarted
-- name: install pip3  # Установка pip для использования в следущей задаче
+
+#Установка pip менеджера
+- name: install pip3
   become: true
   apt: name=python3-pip state=present 
-- name: Install pymysql # Установка библиотеки phyton pymsql, она требуется для выполнения модулей community.mysql в следующих шагах
-  become: true 
-  pip:
-    name: pymysql
-    state: present
-- name: create slave user # Создание пользователя для репликации на сервере master
+
+#Установка библиотеки phyton pymsql
+- name: Install dependency
   become: true
-  community.mysql.mysql_user:
+  ansible.builtin.pip:
+    name: PyMySQL
+    state: latest
+    executable: pip3
+
+#Создание пользователя для репликации на сервере master
+- name: create slave user
+  become: true
+  mysql_user:
     name: "{{ mysql_slave_user }}" 
     host: '%'
     priv: "*.*:REPLICATION SLAVE"
     password: "{{ mysql_slave_password }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
   when: cluster_role == 'master'
-- name: get master status # Получение значений master status 
+
+#Регистрируем "Мастера кластера"
+- name: get master status 
   become: true
   community.mysql.mysql_query:
     login_unix_socket: /var/run/mysqld/mysqld.sock
@@ -45,31 +62,39 @@
   delegate_to: "{{ mysql_master }}"
   when: cluster_role == 'slave'
   register: master_status
-- name: set variable    # Запись значений фактов о хосте master в переменные для slave для того, чтобы избежать "нагромождения в строке sql-запроса в следующем шаге Slave Change Master"
+
+#Запись значений о master в переменные для slave
+- name: set variable
   ansible.builtin.set_fact:
-#    master_ip: "{{ hostvars['mysql1'].ip }}"                                                 
     master_log_file: "{{ master_status.query_result[0][0].File }}"
     master_postion:  "{{ master_status.query_result[0][0].Position }}"
   when: cluster_role == 'slave'  
-- name: Slave Stop Slave  # Остановка SLAVE на хосте SLAVE
+
+#Остановка slave
+- name: Slave Stop Slave
   become: true
   community.mysql.mysql_query:
     login_unix_socket: /var/run/mysqld/mysqld.sock
     query: "STOP SLAVE;"
   when: cluster_role == 'slave'
-- name: Slave Change Master # Изменение MASTER на хосте SLAVE
+
+#Задаем master на slave
+- name: Change Master
   become: true
   community.mysql.mysql_query:
     login_unix_socket: /var/run/mysqld/mysqld.sock
-#    query: "CHANGE MASTER TO MASTER_HOST='{{ master_ip }}',MASTER_USER='{{ mysql_slave_user }}', MASTER_PASSWORD='{{ mysql_slave_password }}', MASTER_LOG_FILE='{{ master_log_file }}',MASTER_LOG_POS={{ master_postion }};"
     query: "CHANGE MASTER TO MASTER_HOST='{{ mysql_master_ip }}',MASTER_USER='{{ mysql_slave_user }}', MASTER_PASSWORD='{{ mysql_slave_password }}', MASTER_LOG_FILE='{{ master_log_file }}',MASTER_LOG_POS={{ master_postion }};"
   when: cluster_role == 'slave'
-- name: START SLAVE # Запуск SLAVE
+
+#Запуск slave
+- name: start slave
   become: true
   community.mysql.mysql_query:
     login_unix_socket: /var/run/mysqld/mysqld.sock
     query: "START SLAVE;"
   when: cluster_role == 'slave'
+
+#Создание бд WordPress
 - name: Create WP DataBase
   become: true
   community.mysql.mysql_db:
@@ -77,7 +102,9 @@
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
   when: cluster_role == 'master'
-- name: create wordpress user # Создание пользователя для репликации на сервере master
+
+#Создание пользователя репликации на сервере master
+- name: create wordpress user
   become: true
   community.mysql.mysql_user:
     name: "{{ mysql_wp_user }}" 
@@ -86,4 +113,3 @@
     password: "{{ mysql_wp_password }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
   when: cluster_role == 'master'
- # CHANGE MASTER TO MASTER_HOST='10.0.0.15',MASTER_USER='slave_user', MASTER_PASSWORD='123IklA098', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=157

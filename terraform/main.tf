@@ -31,6 +31,7 @@ resource "yandex_compute_instance" "reverse-proxy" {
   }
   metadata = {
     user-data = "${file("config.yml")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
 }
 
@@ -62,6 +63,7 @@ resource "yandex_compute_instance" "mysqlm" {
   }
   metadata = {
     user-data = "${file("config.yml")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
 }
 
@@ -88,6 +90,8 @@ resource "yandex_compute_instance" "mysqls" {
   }
   metadata = {
     user-data = "${file("config.yml")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+
   }
 }
 
@@ -115,6 +119,7 @@ resource "yandex_compute_instance" "application" {
   }
   metadata = {
     user-data = "${file("config.yml")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
 }
 
@@ -142,6 +147,7 @@ resource "yandex_compute_instance" "gitlab" {
   }
   metadata = {
     user-data = "${file("config.yml")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
   
 }
@@ -168,7 +174,8 @@ resource "yandex_compute_instance" "mon" {
     nat       = false
   }
   metadata = {
-    user-data = "${file("config.yml")}"
+    user-data = "${file("config.txt")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
   
 }

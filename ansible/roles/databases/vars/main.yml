@@ -1,2 +1,8 @@
 ---
-# vars file for install-mysql
+#Переменные скуля
+mysql_slave_user: wordpress
+mysql_slave_password: wordpress
+mysql_wp_database: wordpress
+mysql_wp_user: wordpress
+mysql_wp_password: wordpress
+mysql_master: not

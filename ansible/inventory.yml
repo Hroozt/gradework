@@ -1,0 +1,39 @@
+---
+all:
+  children:
+    nginx:
+      hosts:
+        reverse-proxy:
+          ansible_host: 51.250.80.237
+          ansible_user: ubuntu
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no"
+    database:
+      hosts:
+        mysqlm:
+          ansible_host: 10.0.1.15
+          ansible_user: ubuntu
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.237"
+          cluster_role: 'master'
+        mysqls:
+          ansible_host: 10.0.2.3
+          ansible_user: ubuntu
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.237"
+          cluster_role: 'slave'
+    application:
+      hosts:
+        application:
+          ansible_host: 10.0.1.19
+          ansible_user: ubuntu
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.237"
+    gitlab:
+      hosts:
+        gitlab:
+          ansible_host: 10.0.1.13
+          ansible_user: ubuntu
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.237"
+    mon:
+      hosts:
+        mon:
+          ansible_host: 10.0.1.27
+          ansible_user: ubuntu
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.237"

@@ -1,4 +1,4 @@
 variable "os_username" {
- default = "hroozt"
+ default = "ubuntu"
  description = "Стандартное имя пользюка"
 }
