@@ -89,6 +89,30 @@ deploy-stage:
 ![alertmanager](https://user-images.githubusercontent.com/92970717/197937864-041f49d2-99f8-4b72-aed8-bd1d31ceed42.png)
 
 
+### Скриншоты узлов по SSL
+
+Wordpress https://hroozt.xyz
+
+![image](https://user-images.githubusercontent.com/92970717/198007157-95a86dab-15fc-479c-8242-8a7a4da06e8c.png)
+
+Gitlab https://gitlab.hroozt.xyz
+
+![image](https://user-images.githubusercontent.com/92970717/198007281-35fbcb85-a1c2-4601-8c1d-02b9eae51691.png)
+
+Prometheus https://prometheus.hroozt.xyz
+
+![image](https://user-images.githubusercontent.com/92970717/198007435-4957e8ed-ff25-40d2-a4ec-f047add07c40.png)
+
+Grafana https://grafana.hroozt.xyz
+
+![image](https://user-images.githubusercontent.com/92970717/198007638-ac5aa855-3e3f-4115-acf2-3c87f567b73d.png)
+
+Alertmanager https://alertmanager.hroozt.xyz
+
+![image](https://user-images.githubusercontent.com/92970717/198007809-aea3c556-cc4a-4b5b-97f4-c3f66c5e69c6.png)
+
+
+
 ### Краткое резюме
 
 Диплом был выполнен в сжатые сроки, в силу обстоятельств. Качественно не оформлен, но суть изложена.
