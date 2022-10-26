@@ -18,7 +18,7 @@ https://alertmanager.you.domain (Alert Manager)
 
 ### Домен
 
-1) Зарегистрирован на рег.ру делигирован на ОБако яндекса
+1) Зарегистрирован на рег.ру делигирован на облако яндекса
 
 ![image](https://user-images.githubusercontent.com/92970717/197939428-ff7c4e90-c5e3-41d8-a0b4-d9715892a71c.png)
 
