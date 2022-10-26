@@ -18,8 +18,12 @@ https://alertmanager.you.domain (Alert Manager)
 
 ### Домен
 
-1) Зарегистрирован на рег.ру
-2) Через Letsencrypt получен Сертификат, далее в роли reverse-proxy режим letsencrypt  переведен в ```--dry-run```
+1) Зарегистрирован на рег.ру делигирован на ОБако яндекса
+
+![image](https://user-images.githubusercontent.com/92970717/197939428-ff7c4e90-c5e3-41d8-a0b4-d9715892a71c.png)
+
+
+3) Через Letsencrypt получен Сертификат, далее в роли reverse-proxy режим letsencrypt  переведен в ```--dry-run```
 
 
 ![letsencrypt](https://user-images.githubusercontent.com/92970717/197700721-b525e848-3270-49eb-b545-4e65c727d8ee.png)
