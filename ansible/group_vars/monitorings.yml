@@ -5,3 +5,4 @@ nodeexporter_hosts:
   - "{{application_server_ip}}:9100"
   - "{{mon_ip}}:9100"
   - "{{nginx_ip}}:9100"
+  - "{{runner_ip}}:9100"
