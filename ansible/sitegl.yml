@@ -1,6 +1,6 @@
 ---
-- name: Runner
-  hosts: runner
+- name: application
+  hosts: application
   roles:
-    - { role: gitlab-runner }
+    - { role: application }
     - { role: nodeexporter }
